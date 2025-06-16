@@ -1,0 +1,47 @@
+# Membuat file migrasi untuk tabel users
+node ace make:migration users_table
+
+# Membuat file migrasi untuk tabel categories
+node ace make:migration categories_table
+
+# Membuat file migrasi untuk tabel products
+node ace make:migration products_table
+
+# Membuat file migrasi untuk tabel pivot product_category
+node ace make:migration product_category_pivot_table
+
+# Membuat file migrasi untuk tabel product_variants
+node ace make:migration product_variants_table
+
+# Membuat file migrasi untuk tabel product_reviews
+node ace make:migration product_reviews_table
+
+# Membuat file migrasi untuk tabel orders
+node ace make:migration orders_table
+
+# Membuat file migrasi untuk tabel order_items
+node ace make:migration order_items_table
+
+
+# Membuat file migrasi untuk semua tabel utama dalam sistem e-commerce
+node ace make:migration users_table && node ace make:migration categories_table && node ace make:migration products_table && node ace make:migration product_category_pivot_table && node ace make:migration product_variants_table && node ace make:migration product_reviews_table && node ace make:migration orders_table && node ace make:migration order_items_table
+
+
+
+# Model untuk pengguna
+node ace make:model User
+
+# Model untuk produk dan variasinya
+node ace make:model Product
+node ace make:model Category
+node ace make:model ProductVariant
+node ace make:model ProductReview
+
+# Model untuk pesanan
+node ace make:model Order
+node ace make:model OrderItem
+
+Buat Controller: Jalankan perintah 
+node ace make:controller Auth
+Buat Validator: Jalankan perintah 
+node ace make:validator auth
