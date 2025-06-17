@@ -4,17 +4,10 @@ import { middleware } from '#start/kernel'
 // Impor controller yang akan kita gunakan
 const AuthController = () => import('#controllers/auth_controller')
 const PagesController = () => import('#controllers/pages_controller')
+const AdminProductsController = () => import('#controllers/admin/products_controller')
 
-/**
- * Rute untuk halaman utama.
- * FIX: Mengarahkan rute ke PagesController.home
- */
 router.get('/', [PagesController, 'home']).as('home')
 
-/**
- * Kelompokkan semua rute yang berhubungan dengan otentikasi
- * di bawah prefix '/auth'.
- */
 router
   .group(() => {
     // Rute untuk menampilkan form registrasi
@@ -40,13 +33,20 @@ router
   })
   .prefix('/auth')
 
-/**
- * Kelompokkan semua rute yang memerlukan login.
- * Contoh: Dashboard
- */
 router
   .group(() => {
     // FIX: Mengarahkan rute ke PagesController.dashboard
     router.get('/dashboard', [PagesController, 'dashboard']).as('dashboard')
   })
   .use(middleware.auth()) // Middleware ini melindungi semua rute di dalam grup
+
+router
+  .group(() => {
+    router.get('/products', [AdminProductsController, 'index']).as('admin.products.index')
+    router.get('/products/create', [AdminProductsController, 'create']).as('admin.products.create')
+    router.post('/products', [AdminProductsController, 'store']).as('admin.products.store')
+    router.get('/products/:id/edit', [AdminProductsController, 'edit']).as('admin.products.edit')
+    router.put('/products/:id', [AdminProductsController, 'update']).as('admin.products.update')
+  })
+  .prefix('/admin')
+  .use(middleware.admin())
